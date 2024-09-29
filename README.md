@@ -91,4 +91,4 @@ This project is Funded by Pakistan Engineering Concil(PEC)
 
 ## Contact
 
-For further inquiries or support, contact at farhanahmad@engineer.com
+For further inquiries or support, contact at zubair.executive@gmail.com
