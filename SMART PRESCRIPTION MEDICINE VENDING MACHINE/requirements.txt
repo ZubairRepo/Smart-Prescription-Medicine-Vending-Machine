@@ -1,0 +1,14 @@
+Flask
+SpeechRecognition
+customtkinter
+pytesseract
+sounddevice
+Pillow
+numpy
+tk
+threading
+pyttsx3
+wavio
+pyserial
+opencv-python
+firebase-admin

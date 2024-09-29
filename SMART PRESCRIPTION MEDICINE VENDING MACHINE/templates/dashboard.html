@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIZ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #header {
+            background-color: #3498db;
+            color: #ffffff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        #container {
+            max-width: 800px; /* Adjust as needed */
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 2px 55px;
+            margin: 0px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        /* Style for the "Home" item */
+        nav ul li:nth-child(1) {
+            margin-right: 10px; /* Add 10px margin to the right of the "Home" item */
+        }
+
+        /* Style for the "Dashboard" item */
+        nav ul li:nth-child(2) {
+            margin-left: 10px; /* Add 10px margin to the left of the "Dashboard" item */
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: #2980b9; /* Highlight color on hover or active */
+        }
+
+        table 
+        {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            line-height: 24px; /* Increase the line-height to increase the height of rows */
+            text-align: center;
+            border: 3px solid #ddd;
+            font-size: 18px;
+            padding: 4px; /* Add padding for better spacing */
+        }
+    
+        th {
+            background-color: #3498db; /* Add blue color to the first row */
+            color: #fff; /* Set text color to white for better visibility */
+        }
+    
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<div id="header">
+    <h1>FIZ</h1>
+    <nav>
+        <ul>
+            <li><a href="/" {% if active == 'home' %} class="active" {% endif %}>Home</a></li>
+            <li><a href="/dashboard" {% if active == 'dashboard' %} class="active" {% endif %}>Dashboard</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div id="container">
+    <h2>Dashboard</h2>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Total Stock</th>
+                <th>Time</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <div class="col-md-6">
+        <!-- Visualizing Product Quantities Chart -->
+        <h2>In Store Stock</h2>
+        <canvas id="myChart3" width="300" height="350"></canvas>
+    </div>
+</div>
+
+<script>
+    // Function to update data every 1 second
+    function updateData() {
+        $.get('/update_data', function (data) {
+
+            var dataTable = $('#data-table tbody');
+            dataTable.empty(); 
+            data.forEach(function (item, index) {
+                // Set the background color based on the value of "count"
+                var bgColor = item.count > 10 ? '#ffffff' : 'red';
+
+                var tableRow = '<tr style="background-color: ' + bgColor + ';">' +
+                    '<td>' + item.name + '</td>' +
+                    '<td>' + item.price + '</td>' +
+                    '<td>' + item.count + '</td>' +
+                    '<td>' + item.timestamp + '</td>' +
+                    '</tr>';
+
+                dataTable.append(tableRow);
+            });
+
+            
+            // Update the chart data
+            var names = data.map(function (item) {
+                return item.name;
+            });
+            var counts = data.map(function (item) {
+                return item.count;
+            });
+            myChart3.data.labels = names;
+            myChart3.data.datasets[0].data = counts;
+            myChart3.update();
+            
+        });
+    }
+   // Update data initially and then every 1 second
+    $(document).ready(function () {
+        updateData(); // Initial call to start updating
+        setInterval(function () {
+            updateData(); // Update every 1 second
+        }, 500);
+    });
+
+            // Chart initialization for Monthly Sales Insights
+        var ctx3 = document.getElementById('myChart3').getContext('2d');
+        var myChart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'No. of Products',
+                    data: [],
+                    backgroundColor: 'rgba(52, 152, 219, 0.9)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+        });
+ 
+</script>
+
+</body>
+</html>

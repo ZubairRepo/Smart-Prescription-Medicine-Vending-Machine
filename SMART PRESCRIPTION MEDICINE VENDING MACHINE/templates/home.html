@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIZ - Medicine Upload</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        #container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 2px 55px;
+            margin: 0px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        nav ul li:nth-child(1) {
+            margin-right: 10px; 
+        }
+        nav ul li:nth-child(2) {
+            margin-left: 10px; 
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        h3
+        {
+        text-align: center; /* Center the text horizontally */
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: #2980b9; 
+        }
+        #welcome-text {
+            margin-bottom: 20px;
+            text-align: center;
+            text-align: justify;
+        }
+
+        #medicine-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #medicine-list li {
+            background-color: #ecf0f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        #upload-form {
+            text-align: center;
+        }
+
+        #fileToUpload {
+            margin-top: 10px;
+        }
+
+        #submit-btn {
+            margin-top: 10px;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>FIZ</h1>
+        <nav>
+            <ul>
+                <li><a href="/" {% if active == 'home' %} class="active" {% endif %}>Home</a></li>
+                <li><a href="/dashboard" {% if active == 'dashboard' %} class="active" {% endif %}>Dashboard</a></li>
+            </ul>
+        </nav>
+    </div>
+
+<div id="container">
+    <div id="welcome-text">
+        <h3>Welcome to the FIZ</h3>
+        
+        FIZ is your ultimate prescription scanning and management companion. Say goodbye to the hassle of storing paper prescriptions and welcome the convenience of having all your medication information digitally organized in one place.
+    </div>
+    
+    <div id="medicine-list">
+        <h3>Available Medicines</h3>
+        <ul>
+            <li>Panadol</li>
+            <li>Bruffen</li>
+            <li>Calpol</li>
+            <li>Tramal</li>
+            <li>Flagyl</li>
+            <li>Oxycodone</li>
+        </ul>
+    </div>
+    
+    <h3>Upload the Prescription</h3>
+
+    <form action="/" method="post" enctype="multipart/form-data" id="upload-form">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <br>
+        <input type="submit" value="Upload File" name="submit" id="submit-btn">
+    </form>
+    
+</div>
+
+</body>
+</html>
